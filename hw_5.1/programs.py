@@ -35,8 +35,19 @@ def most_common_element(numbers: list[int]) -> int:
 
     return int(mc_element)
 
-print(most_common_element([1, 2, 3, 2, 5, 1]))
-print(most_common_element([-2, -4, -3, 1, -2]))
-print(most_common_element([]))
-print(most_common_element([8, 3, 8, 3]))
-print(most_common_element([2, -4, 6, -4, 10]))
+
+# 3. Алгоритм находит индексы, сумма которых равна заданному значению
+def sum_two_indexes(numbers: list[int], target: int) -> list[int] | None:
+
+    for i in range(len(numbers)):
+        for j in range(i + 1, len(numbers)):
+            if numbers[i] + numbers[j] == target:
+
+                return [i, j]
+
+    return None
+
+print(sum_two_indexes([1, 2, 3, 2, 5, 1], 2))
+print(sum_two_indexes([-2, -4, -3, 1, -2, 7], 8))
+print(sum_two_indexes([-2, -4, -3, 1, -2, 2], 3))
+

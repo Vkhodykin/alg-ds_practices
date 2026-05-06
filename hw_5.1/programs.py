@@ -9,11 +9,34 @@ def sum_even_numbers(numbers: list[int]) -> int:
 
     return 1 if summa < 0 else summa
 
-print(sum_even_numbers([1, 2, 3, 4, 5, 6]))  # 2+4+6 = 12
-print(sum_even_numbers([-2, -4, -6, 1, 3]))  # -2-4-6 = -12 -> 1
-print(sum_even_numbers([]))  # 0
-print(sum_even_numbers([1, 3, 5, 7]))  # 0
-print(sum_even_numbers([2, -4, 6, -8, 10]))  # 2-4+6-8+10 = 6
 
+#2. Алгоритм определяет наиболее часто встречающийся элемент в списке
+def most_common_element(numbers: list[int]) -> int:
 
-# 2.
+    if not numbers:
+        return None
+
+    numbers.sort()
+
+    mc_element = numbers[0]
+    max_count = 1
+    current_element = numbers[0]
+    current_count = 1
+
+    for i in range(1, len(numbers)):
+        if numbers[i] == mc_element:
+            max_count += 1
+            number = numbers[i]
+
+        else:
+            if current_count > max_count:
+                mc_element = current_element
+                max_count = current_count
+
+    return int(mc_element)
+
+print(most_common_element([1, 2, 3, 2, 5, 1]))
+print(most_common_element([-2, -4, -3, 1, -2]))
+print(most_common_element([]))
+print(most_common_element([8, 3, 8, 3]))
+print(most_common_element([2, -4, 6, -4, 10]))

@@ -24,14 +24,25 @@ def most_common_element(numbers: list[int]) -> int:
     current_count = 1
 
     for i in range(1, len(numbers)):
-        if numbers[i] == mc_element:
-            max_count += 1
-            number = numbers[i]
+        if numbers[i] == current_element:
+            current_count += 1
 
         else:
+            # Проверка текущего элемента на самый частый
             if current_count > max_count:
                 mc_element = current_element
                 max_count = current_count
+            # Начинаем подсчет для нового элемента
+            current_element = numbers[i]
+            current_count = 1
+
+    # Проверяем последний элемент
+    if current_count > max_count:
+        mc_element = current_element
+        max_count = current_count
+
+    elif current_count == max_count and current_element < mc_element:
+        mc_element = current_element
 
     return int(mc_element)
 
@@ -47,7 +58,4 @@ def sum_two_indexes(numbers: list[int], target: int) -> list[int] | None:
 
     return None
 
-print(sum_two_indexes([1, 2, 3, 2, 5, 1], 2))
-print(sum_two_indexes([-2, -4, -3, 1, -2, 7], 8))
-print(sum_two_indexes([-2, -4, -3, 1, -2, 2], 3))
 

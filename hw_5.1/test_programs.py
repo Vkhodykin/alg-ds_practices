@@ -1,5 +1,6 @@
 import pytest
 from programs import sum_even_numbers
+from programs import most_common_element
 
 # Позитивные тесты
 def test_positive_even_numbers():
@@ -67,4 +68,96 @@ def test_balance_negative_and_positive():
     assert sum_even_numbers([-1000, 5000, 3000]) == 7000
 
 
+# Позитивные тесты
+def test_single_element():
+    assert most_common_element([42]) == 42
 
+def test_all_elements_same():
+    assert most_common_element([5, 5, 5, 5, 5]) == 5
+
+def test_one_clear_winner():
+    assert most_common_element([1, 2, 2, 2, 3, 4]) == 2
+
+def test_multiple_winners_return_smallest():
+    assert most_common_element([1, 1, 2, 2, 3, 3]) == 1
+
+def test_two_winners_smallest_first():
+    assert most_common_element([10, 10, 20, 20, 30]) == 10
+
+def test_all_unique_elements():
+    assert most_common_element([5, 4, 3, 2, 1]) == 1
+
+def test_unsorted_input():
+    assert most_common_element([3, 1, 4, 1, 5, 9, 2, 1]) == 1
+
+def test_negative_numbers():
+    assert most_common_element([-1, -2, -2, -3, -2, -4]) == -2
+
+def test_large_numbers():
+    assert most_common_element([10000, 20000, 10000, 15000, 20000, 20000]) == 20000
+
+def test_zero_values():
+    assert most_common_element([0, 0, 1, 2, 0, 3]) == 0
+
+def test_tie_with_three_elements():
+    assert most_common_element([1, 1, 2, 2, 2, 3, 3]) == 2
+
+def test_one_element_appears_more_than_half():
+    assert most_common_element([3, 3, 3, 3, 1, 2, 3]) == 3
+
+def test_mixed_positive_negative():
+    assert most_common_element([-5, 3, -5, 7, -5, 3, 3]) == -5
+
+def test_element_with_max_frequency_at_end():
+    assert most_common_element([1, 2, 3, 4, 5, 5, 5, 5]) == 5
+
+def test_element_with_max_frequency_at_beginning():
+    assert most_common_element([5, 5, 5, 5, 1, 2, 3, 4]) == 5
+
+# Негативные тесты
+def test_empty_list_returns_none():
+    assert most_common_element([]) is None
+
+def test_complex_tie_smallest_not_first():
+    result = most_common_element([10, 10, 5, 5, 5, 10, 10, 5])
+    expected = 5
+    assert result == expected
+    assert result < 10
+
+def test_tie_with_alternating_pattern():
+    result = most_common_element([1, 2, 1, 2, 1, 2, 3])
+    expected = 1
+    assert result == expected
+
+# Граничные тесты
+def test_two_elements_different():
+    assert most_common_element([1, 2]) == 1
+
+def test_two_elements_same():
+    assert most_common_element([7, 7]) == 7
+
+def test_tie_at_beginning_and_end():
+    assert most_common_element([5, 5, 1, 2, 3, 4, 5, 5]) == 5
+
+def test_single_element_zero():
+    assert most_common_element([0]) == 0
+
+def test_minimum_values_range():
+    assert most_common_element([1, 1, 1, 2, 2]) == 1
+
+def test_maximum_values_range():
+    assert most_common_element([20000, 20000, 20000, 19999, 19999]) == 20000
+
+def test_alternating_tie_with_larger_numbers():
+    result = most_common_element([1000, 2000, 1000, 2000, 3000])
+    expected = 1000
+    assert result == expected
+
+def test_three_elements_all_unique():
+    assert most_common_element([100, 200, 300]) == 100
+
+def test_two_elements_with_zero():
+    assert most_common_element([0, 1]) == 0
+
+def test_consecutive_duplicates():
+    assert most_common_element([1, 1, 1, 2, 2, 3, 3, 3, 3]) == 3

@@ -1,6 +1,8 @@
 import pytest
 from programs import sum_even_numbers
 from programs import most_common_element
+from programs import sum_two_indexes
+
 
 # Позитивные тесты
 def test_positive_even_numbers():
@@ -161,3 +163,103 @@ def test_two_elements_with_zero():
 
 def test_consecutive_duplicates():
     assert most_common_element([1, 1, 1, 2, 2, 3, 3, 3, 3]) == 3
+
+
+# Позитивные тесты
+def test_basic_case():
+    result = sum_two_indexes([2, 7, 11, 15], 9)
+    assert result == [0, 1]
+
+def test_numbers_at_end():
+    result = sum_two_indexes([1, 2, 3, 4, 5, 6], 11)
+    assert result == [4, 5]
+
+def test_numbers_at_beginning():
+    result = sum_two_indexes([10, 20, 30, 40, 50], 30)
+    assert result == [0, 1]
+
+def test_with_negative_numbers():
+    result = sum_two_indexes([-3, 4, 3, 90], 0)
+    assert result == [0, 2]
+
+def test_with_zero():
+    result = sum_two_indexes([0, 5, 10, 15], 5)
+    assert result == [0, 1]
+
+def test_duplicate_numbers():
+    result = sum_two_indexes([3, 3, 4, 5], 6)
+    assert result == [0, 1]
+
+def test_target_is_zero():
+    result = sum_two_indexes([-5, 5, 10, 20], 0)
+    assert result == [0, 1]
+
+def test_large_numbers():
+    result = sum_two_indexes([10000, 20000, 30000, 40000], 30000)
+    assert result == [0, 1]
+
+def test_negative_target():
+    result = sum_two_indexes([-10, -20, 5, 15], -30)
+    assert result == [0, 1]
+
+def test_mixed_positive_negative():
+    result = sum_two_indexes([-1, -2, 3, 5, 8], 1)
+    assert result == [1, 2]
+
+# Негативные тесты
+def test_no_solution_simple():
+    result = sum_two_indexes([1, 2, 3, 4], 100)
+    assert result is None
+
+def test_no_solution_with_negative():
+    result = sum_two_indexes([-5, -3, -1, 2], 10)
+    assert result is None
+
+def test_single_element():
+    result = sum_two_indexes([42], 42)
+    assert result is None
+
+def test_empty_list():
+    result = sum_two_indexes([], 5)
+    assert result is None
+
+def test_two_elements_no_match():
+    result = sum_two_indexes([10, 20], 40)
+    assert result is None
+
+# Граничные тесты
+def test_two_elements_match():
+    result = sum_two_indexes([5, 5], 10)
+    assert result == [0, 1]
+
+def test_first_and_last():
+    result = sum_two_indexes([1, 2, 3, 4, 5, 6], 7)
+    assert result == [0, 5]
+
+def test_adjacent_elements():
+    result = sum_two_indexes([100, 200, 300, 400], 400)
+    assert result == [0, 2]
+
+def test_same_value_multiple_occurrences():
+    result = sum_two_indexes([5, 5, 5, 5], 10)
+    assert result == [0, 1]
+
+def test_target_at_beginning_and_end():
+    result = sum_two_indexes([1, 100, 200, 300, 400, 1], 2)
+    assert result == [0, 5]
+
+def test_with_large_negative_numbers():
+    result = sum_two_indexes([-10000, -20000, 30000], -30000)
+    assert result == [0, 1]
+
+def test_zero_target_with_zeros():
+    result = sum_two_indexes([0, 5, 0, 10], 0)
+    assert result == [0, 2]
+
+def test_max_value_range():
+    result = sum_two_indexes([20000, 20000, 1, 2], 40000)
+    assert result == [0, 1]
+
+def test_min_value_range():
+    result = sum_two_indexes([-20000, -20000, 1, 2], -40000)
+    assert result == [0, 1]

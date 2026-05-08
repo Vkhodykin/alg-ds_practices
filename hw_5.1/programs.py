@@ -9,6 +9,8 @@ def sum_even_numbers(numbers: list[int]) -> int:
 
     return 1 if summa < 0 else summa
 
+# O(n) = 1 + n * (1 + 1 + 1 + 1 + 1) = 1 + 5 * n = 5 * n = n -> O(n)
+
 
 #2. Алгоритм определяет наиболее часто встречающийся элемент в списке
 def most_common_element(numbers: list[int]) -> int:
@@ -46,6 +48,9 @@ def most_common_element(numbers: list[int]) -> int:
 
     return int(mc_element)
 
+# O(n) = 1 + 1 + 1 + 1 + 1 + n * (1 + 1 + 1 + 1) + n * (1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1)
+#       + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 = 5 + n * 4 + n * 10 + 11 = n * 4 + n * 10 = n + n = n -> O(n)
+
 
 # 3. Алгоритм находит индексы, сумма которых равна заданному значению
 def sum_two_indexes(numbers: list[int], target: int) -> list[int] | None:
@@ -58,4 +63,4 @@ def sum_two_indexes(numbers: list[int], target: int) -> list[int] | None:
 
     return None
 
-
+# O(n) = n * (n * (1 + 1 + 1 + 1 + 1) = n * (n * 5) = n**2 * 5 * n = n**2 * n = O(n**k)

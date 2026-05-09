@@ -49,3 +49,21 @@ def count_ones(n: int) -> int:
     return count
 
 # O(n) = 1 + n * (1 + 1 + 1) = 1 + n * 3 = n * 3 = n -> O(n)
+
+
+# Задача №4
+def is_palindrome(x: int) -> bool:
+    if x < 0 or (x % 10 == 0 and x != 0):
+        return False
+    if x < 10:
+        return True
+
+    reversed_number = 0
+    number = x
+
+    while number > 0:
+        last_digit = number % 10
+        reversed_number = reversed_number * 10 + last_digit
+        number //= 10
+
+    return x == reversed_number

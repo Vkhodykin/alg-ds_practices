@@ -2,6 +2,7 @@ import pytest
 from programs import factorial
 from programs import fibonacci
 from programs import count_ones
+from programs import is_palindrome
 
 
 # Позитивные тесты
@@ -416,3 +417,112 @@ def test_count_ones_boundary_all_ones_64bit():
     all_ones_64 = 2 ** 64 - 1
     result = count_ones(all_ones_64)
     assert result == 64
+
+
+# Позитивные тесты
+def test_is_palindrome_single_digit():
+    for i in range(10):
+        assert is_palindrome(i) is True
+
+def test_is_palindrome_two_digit_palindrome():
+    assert is_palindrome(11) is True
+    assert is_palindrome(22) is True
+    assert is_palindrome(33) is True
+    assert is_palindrome(99) is True
+
+def test_is_palindrome_three_digit_palindrome():
+    assert is_palindrome(121) is True
+    assert is_palindrome(131) is True
+    assert is_palindrome(141) is True
+    assert is_palindrome(151) is True
+
+def test_is_palindrome_four_digit_palindrome():
+    assert is_palindrome(1221) is True
+    assert is_palindrome(1331) is True
+    assert is_palindrome(1441) is True
+    assert is_palindrome(1551) is True
+
+def test_is_palindrome_five_digit_palindrome():
+    assert is_palindrome(12321) is True
+    assert is_palindrome(12421) is True
+    assert is_palindrome(12521) is True
+    assert is_palindrome(13531) is True
+
+def test_is_palindrome_symmetrical_number():
+    assert is_palindrome(1001) is True
+    assert is_palindrome(12021) is True
+    assert is_palindrome(123321) is True
+
+def test_is_palindrome_large_palindrome():
+    assert is_palindrome(12345678900987654321) is True
+    assert is_palindrome(1000000001) is True
+
+def test_is_palindrome_zero():
+    assert is_palindrome(0) is True
+
+# Негативные тесты
+def test_is_palindrome_negative_numbers():
+    assert is_palindrome(-1) is False
+    assert is_palindrome(-11) is False
+    assert is_palindrome(-121) is False
+    assert is_palindrome(-12321) is False
+
+def test_is_palindrome_ten():
+    assert is_palindrome(10) is False
+
+def test_is_palindrome_twenty():
+    assert is_palindrome(20) is False
+
+def test_is_palindrome_non_palindrome_three_digit():
+    assert is_palindrome(123) is False
+    assert is_palindrome(124) is False
+    assert is_palindrome(125) is False
+
+def test_is_palindrome_non_palindrome_four_digit():
+    assert is_palindrome(1234) is False
+    assert is_palindrome(5678) is False
+    assert is_palindrome(9012) is False
+
+def test_is_palindrome_ending_with_zero():
+    assert is_palindrome(10) is False
+    assert is_palindrome(20) is False
+    assert is_palindrome(100) is False
+    assert is_palindrome(110) is False
+    assert is_palindrome(120) is False
+
+# Граничные тесты
+def test_is_palindrome_edge_zero():
+    assert is_palindrome(0) is True
+
+def test_is_palindrome_edge_one_digit():
+    for i in range(1, 10):
+        assert is_palindrome(i) is True
+
+def test_is_palindrome_edge_two_digits():
+    assert is_palindrome(11) is True
+    assert is_palindrome(12) is False
+    assert is_palindrome(99) is True
+
+def test_is_palindrome_edge_negative_one():
+    assert is_palindrome(-1) is False
+    assert is_palindrome(-5) is False
+
+def test_is_palindrome_edge_power_of_ten():
+    assert is_palindrome(1) is True
+    assert is_palindrome(10) is False
+    assert is_palindrome(100) is False
+    assert is_palindrome(1000) is False
+    assert is_palindrome(10000) is False
+
+def test_is_palindrome_edge_all_same_digits():
+    assert is_palindrome(111) is True
+    assert is_palindrome(222) is True
+    assert is_palindrome(333) is True
+    assert is_palindrome(1111) is True
+    assert is_palindrome(2222) is True
+
+def test_is_palindrome_edge_even_odd_length():
+    assert is_palindrome(121) is True
+    assert is_palindrome(12321) is True
+    assert is_palindrome(1221) is True
+    assert is_palindrome(123321) is True

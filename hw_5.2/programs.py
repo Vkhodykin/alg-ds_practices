@@ -31,3 +31,21 @@ def fibonacci(n: int) -> list[int]:
     return list_fibonacci
 
 # O(n) = 1 + n * (1 + 1 + 1 + 1 + 1) = 1 + n * 5 = n * 5 = n -> O(n)
+
+
+# Задача №3
+def count_ones(n: int) -> int:
+    if n < 0:
+        raise ValueError()
+    if n == 0:
+        return 0
+
+    count = 0
+
+    while n > 0:
+         count += n & 1
+         n >>= 1
+
+    return count
+
+# O(n) = 1 + n * (1 + 1 + 1) = 1 + n * 3 = n * 3 = n -> O(n)

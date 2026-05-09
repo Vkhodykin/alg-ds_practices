@@ -1,6 +1,7 @@
 import pytest
 from programs import factorial
 from programs import fibonacci
+from programs import count_ones
 
 
 # Позитивные тесты
@@ -303,3 +304,115 @@ def test_fibonacci_first_two_elements():
         result = fibonacci(n)
         assert result[0] == 0
         assert result[1] == 1
+
+
+# Позитивные тесты
+def test_count_ones_zero():
+    result = count_ones(0)
+    assert result == 0
+    assert isinstance(result, int)
+
+def test_count_ones_one():
+    result = count_ones(1)
+    assert result == 1
+
+def test_count_ones_two():
+    result = count_ones(2)
+    assert result == 1
+
+def test_count_ones_three():
+    result = count_ones(3)
+    assert result == 2
+
+def test_count_ones_four():
+    result = count_ones(4)
+    assert result == 1
+
+def test_count_ones_five():
+    result = count_ones(5)
+    assert result == 2
+
+def test_count_ones_six():
+    result = count_ones(6)
+    assert result == 2
+
+def test_scount_ones_even():
+    result = count_ones(7)
+    assert result == 3
+
+def test_count_ones_eight():
+    result = count_ones(8)
+    assert result == 1
+
+def test_count_ones_nine():
+    result = count_ones(9)
+    assert result == 2
+
+def test_count_ones_ten():
+    result = count_ones(10)
+    assert result == 2
+
+def test_count_ones_fifteen():
+    result = count_ones(15)
+    assert result == 4
+
+def test_count_ones_sixteen():
+    result = count_ones(16)
+    assert result == 1
+
+def test_count_ones_thirty_one():
+    result = count_ones(31)
+    assert result == 5
+
+def test_count_ones_power_of_two():
+    for i in range(10):
+        assert count_ones(2 ** i) == 1
+
+def test_count_ones_all_ones():
+    assert count_ones(1) == 1   # 1
+    assert count_ones(3) == 2   # 11
+    assert count_ones(7) == 3   # 111
+    assert count_ones(15) == 4  # 1111
+    assert count_ones(31) == 5  # 11111
+    assert count_ones(63) == 6  # 111111
+
+def test_count_ones_large_number():
+    result = count_ones(1000000)
+    assert result == 7
+
+# Негативные тесты
+def test_count_ones_negative_one():
+    with pytest.raises(ValueError):
+        count_ones(-1)
+
+def test_count_ones_negative_five():
+    with pytest.raises(ValueError):
+        count_ones(-5)
+
+def test_count_ones_negative_ten():
+    with pytest.raises(ValueError):
+        count_ones(-10)
+
+def test_count_ones_negative_hundred():
+    with pytest.raises(ValueError):
+        count_ones(-100)
+
+# Граничные тесты
+def test_count_ones_boundary_zero():
+    result = count_ones(0)
+    assert result == 0
+    assert isinstance(result, int)
+
+def test_count_ones_boundary_one():
+    result = count_ones(1)
+    assert result == 1
+
+def test_count_ones_boundary_large_power():
+    large_num = 2 ** 100
+    result = count_ones(large_num)
+    assert result == 1  # Степени двойки имеют только одну единицу
+
+def test_count_ones_boundary_all_ones_64bit():
+    all_ones_64 = 2 ** 64 - 1
+    result = count_ones(all_ones_64)
+    assert result == 64

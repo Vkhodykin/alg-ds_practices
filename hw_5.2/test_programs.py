@@ -3,6 +3,7 @@ from programs import factorial
 from programs import fibonacci
 from programs import count_ones
 from programs import is_palindrome
+from programs import analyze_visitors
 
 
 # Позитивные тесты
@@ -526,3 +527,79 @@ def test_is_palindrome_edge_even_odd_length():
     assert is_palindrome(12321) is True
     assert is_palindrome(1221) is True
     assert is_palindrome(123321) is True
+
+
+# Позитивные тесты
+def test_analyze_visitors_pos_single_day():
+    input_data = [("2023-01-01", 100)]
+    result = analyze_visitors(input_data)
+    popular_days, minima_days, popular_months, minima_months, _, _, _, _ = result
+    assert popular_days == ["Воскресенье"]
+    assert minima_days == ["Воскресенье"]
+    assert popular_months == ["Январь"]
+    assert minima_months == ["Январь"]
+
+def test_analyze_visitors_pos_clear_winner_weekday():
+    input_data = [("2023-01-02", 500), ("2023-01-03", 100), ("2023-01-09", 500)]
+    result = analyze_visitors(input_data)
+    popular_days, minima_days, _, _, _, _, _, _ = result
+    assert popular_days == ["Понедельник"]
+    assert minima_days == ["Вторник"]
+
+def test_analyze_visitors_pos_clear_winner_month():
+    input_data = [("2023-01-01", 1000), ("2023-01-02", 1000), ("2023-02-01", 100)]
+    result = analyze_visitors(input_data)
+    _, _, popular_months, minima_months, _, _, _, _ = result
+    assert popular_months == ["Январь"]
+    assert minima_months == ["Февраль"]
+
+def test_analyze_visitors_pos_tie_weekdays():
+    input_data = [("2023-01-02", 200), ("2023-01-03", 200), ("2023-01-09", 200)]
+    result = analyze_visitors(input_data)
+    popular_days, minima_days, _, _, _, _, _, _ = result
+    assert set(popular_days) == {"Понедельник", "Вторник"}
+
+def test_analyze_visitors_pos_tie_months():
+    input_data = [("2023-01-01", 500), ("2023-02-01", 500), ("2023-03-01", 300)]
+    result = analyze_visitors(input_data)
+    _, _, popular_months, minima_months, _, _, _, _ = result
+    assert set(popular_months) == {"Январь", "Февраль"}
+
+# Негативные тесты
+def test_analyze_visitors_neg_invalid_date():
+    input_data = [("01-01-2023", 100)]
+    with pytest.raises(ValueError):
+        analyze_visitors(input_data)
+
+# Граничные тесты
+def test_analyze_visitors_edge_empty():
+    with pytest.raises(ValueError):
+        analyze_visitors([])
+
+def test_analyze_visitors_edge_single_day_multiple():
+    input_data = [("2023-01-01", 100), ("2023-01-01", 200), ("2023-01-01", 300)]
+    result = analyze_visitors(input_data)
+    _, _, _, _, _, weekday_avg, _, month_avg = result
+    assert weekday_avg[6] == 200.0
+    assert month_avg[1] == 200.0
+
+def test_analyze_visitors_edge_leap_year():
+    input_data = [("2024-02-29", 100)]
+    result = analyze_visitors(input_data)
+    _, _, _, _, _, weekday_avg, _, month_avg = result
+    assert weekday_avg[3] == 100.0  # Четверг
+    assert month_avg[2] == 100.0  # Февраль
+
+def test_analyze_visitors_edge_only_one_weekday():
+    input_data = [("2023-01-02", 100), ("2023-01-09", 200), ("2023-01-16", 150)]
+    result = analyze_visitors(input_data)
+    popular_days, minima_days, _, _, _, _, _, _ = result
+    assert popular_days == ["Понедельник"]
+    assert minima_days == ["Понедельник"]
+
+def test_analyze_visitors_edge_only_one_month():
+    input_data = [("2023-01-01", 100), ("2023-01-15", 200), ("2023-01-31", 150)]
+    result = analyze_visitors(input_data)
+    _, _, popular_months, minima_months, _, _, _, _ = result
+    assert popular_months == ["Январь"]
+    assert minima_months == ["Январь"]

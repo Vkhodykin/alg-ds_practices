@@ -67,3 +67,25 @@ def reverse_even_elements(arr: list[int]) -> list[int]:
 
 # O(n) = n * (1 + 1 + 1 + 1) + 1 + 1 + 1 + n * (1 + 1 + 1 + 1 + 1 + 1 + 1) = n * 4 + 3 + n * 7 = n * 4 + n * 7 =
 #      = n -> O(n)
+
+
+# Задача №4
+def large_integer_plus_one(digits: list[int]) -> list[int]:
+    if not digits:
+        return []
+
+    if len(digits) < 1 or len(digits) > 100:
+        ValueError()
+
+    for i in range(len(digits) - 1, -1, -1): # Перебираем цифры с конца массива к началу
+        if digits[i] < 9:  # Если цифра меньше 9, увеличиваем её и возвращаем результат
+            digits[i] += 1
+
+            return digits
+
+        else:
+            digits[i] = 0  # Если цифра 9, превращаем ее в 0, и цикл переходит к следующему разряду
+
+    return [1] + digits  # Выход из цикла, значит все цифры были девятками (например, [9, 9]), добавляем 1 в начало массива
+
+# O(n) = n * (1 + 1 + 1) + 1 = n * 3 + 1 = n * 3 = n -> O(n)

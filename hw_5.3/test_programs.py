@@ -2,7 +2,7 @@ import pytest
 from programs import max_in_range
 from programs import rotate_and_reverse
 from programs import reverse_even_elements
-
+from programs import large_integer_plus_one
 
 # Позитивные тесты
 def test_max_in_range_positive_simple_range():
@@ -293,3 +293,91 @@ def test_reverse_even_elements_boundary_negative_k_like_conditions():
     new_arr = reverse_even_elements(arr)
     expected = [1, 8, 3, 6, 5, 4, 7, 2]
     assert new_arr == expected
+
+
+# Позитивные тесты
+def test_large_integer_plus_one_positive_simple_increment():
+    digits = [1, 2, 3]
+    assert large_integer_plus_one(digits) == [1, 2, 4]
+
+def test_large_integer_plus_one_positive_increment_middle_digit():
+    digits = [1, 9, 9]
+    assert large_integer_plus_one(digits) == [2, 0, 0]
+
+def test_large_integer_plus_one_positive_increment_single_digit_not_nine():
+    digits = [5]
+    assert large_integer_plus_one(digits) == [6]
+
+def test_large_integer_plus_one_positive_increment_with_carry_at_end():
+    digits = [1, 2, 9]
+    assert large_integer_plus_one(digits) == [1, 3, 0]
+
+def test_large_integer_plus_one_positive_increment_with_multiple_carries():
+    digits = [1, 9, 9, 9]
+    assert large_integer_plus_one(digits) == [2, 0, 0, 0]
+
+def test_large_integer_plus_one_positive_increment_all_nines():
+    digits = [9, 9, 9]
+    assert large_integer_plus_one(digits) == [1, 0, 0, 0]
+
+def test_large_integer_plus_one_positive_increment_large_number():
+    digits = [4, 3, 2, 1]
+    assert large_integer_plus_one(digits) == [4, 3, 2, 2]
+
+def test_large_integer_plus_one_positive_increment_with_zero():
+    digits = [1, 0, 0, 0]
+    assert large_integer_plus_one(digits) == [1, 0, 0, 1]
+
+def test_large_integer_plus_one_positive_increment_with_carry_through_zeros():
+    digits = [1, 9, 0, 9]
+    assert large_integer_plus_one(digits) == [1, 9, 1, 0]
+
+def test_large_integer_plus_one_positive_increment_single_nine():
+    digits = [9]
+    assert large_integer_plus_one(digits) == [1, 0]
+
+# Негативные тесты
+def test_large_integer_plus_one_negative_empty_list():
+    digits = []
+    result = large_integer_plus_one(digits)
+    assert result == []
+
+def test_large_integer_plus_one_negative_none_input():
+    digits = None
+    result = large_integer_plus_one(digits)
+    assert result == []
+
+def test_large_integer_plus_one_negative_non_list_input():
+    with pytest.raises(TypeError):
+        large_integer_plus_one("123")
+
+def test_large_integer_plus_one_negative_leading_zero():
+    digits = [0, 1, 2]
+    result = large_integer_plus_one(digits)
+    assert result == [0, 1, 3]
+
+def test_large_integer_plus_one_negative_string_digits():
+    digits = ["1", "2", "3"]
+    with pytest.raises(TypeError):
+        large_integer_plus_one(digits)
+
+# Граничные тесты
+def test_large_integer_plus_one_boundary_minimum_length():
+    digits = [0]
+    assert large_integer_plus_one(digits) == [1]
+
+def test_large_integer_plus_one_boundary_all_zeros_except_first():
+    digits = [1, 0, 0, 0, 0]
+    assert large_integer_plus_one(digits) == [1, 0, 0, 0, 1]
+
+def test_large_integer_plus_one_boundary_digit_zero_at_end():
+    digits = [1, 2, 3, 0]
+    assert large_integer_plus_one(digits) == [1, 2, 3, 1]
+
+def test_large_integer_plus_one_boundary_digit_nine_at_end_with_carry():
+    digits = [1, 2, 3, 9]
+    assert large_integer_plus_one(digits) == [1, 2, 4, 0]
+
+def test_large_integer_plus_one_boundary_single_digit_zero():
+    digits = [0]
+    assert large_integer_plus_one(digits) == [1]

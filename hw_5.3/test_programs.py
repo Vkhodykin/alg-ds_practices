@@ -1,6 +1,8 @@
 import pytest
 from programs import max_in_range
 from programs import rotate_and_reverse
+from programs import reverse_even_elements
+
 
 # Позитивные тесты
 def test_max_in_range_positive_simple_range():
@@ -185,3 +187,109 @@ def test_rotate_and_reverse_boundary_large_list():
     result = rotate_and_reverse(arr, 250)
     assert len(result) == 1000
     assert sorted(result) == sorted(arr)
+
+
+# Позитивные тесты
+def test_reverse_even_elements_positive_mixed_numbers():
+    arr = [1, 2, 3, 4, 5, 6]
+    assert reverse_even_elements(arr) == [1, 6, 3, 4, 5, 2]
+
+def test_reverse_even_elements_positive_all_even():
+    arr = [2, 4, 6, 8, 10]
+    assert reverse_even_elements(arr) == [10, 8, 6, 4, 2]
+
+def test_reverse_even_elements_positive_all_odd():
+    arr = [1, 3, 5, 7, 9]
+    assert reverse_even_elements(arr) == [1, 3, 5, 7, 9]
+
+def test_reverse_even_elements_positive_single_even():
+    arr = [1, 2, 3, 5, 7]
+    assert reverse_even_elements(arr) == [1, 2, 3, 5, 7]
+
+def test_reverse_even_elements_positive_single_odd():
+    arr = [2, 4, 6, 7, 8]
+    assert reverse_even_elements(arr) == [8, 6, 4, 7, 2]
+
+def test_reverse_even_elements_positive_negative_numbers():
+    arr = [-4, -3, -2, -1, 0, 1, 2, 3]
+    assert reverse_even_elements(arr) == [2, -3, 0, -1, -2, 1, -4, 3]
+
+def test_reverse_even_elements_positive_duplicate_evens():
+    arr = [2, 2, 3, 4, 4, 5, 6]
+    assert reverse_even_elements(arr) == [6, 4, 3, 4, 2, 5, 2]
+
+def test_reverse_even_elements_positive_zero_as_even():
+    arr = [0, 1, 2, 3, 4]
+    assert reverse_even_elements(arr) == [4, 1, 2, 3, 0]
+
+def test_reverse_even_elements_positive_large_numbers():
+    arr = [1000, 1001, 1002, 1003, 1004]
+    assert reverse_even_elements(arr) == [1004, 1001, 1002, 1003, 1000]
+
+# Негативные тесты
+def test_reverse_even_elements_negative_non_list_input():
+    with pytest.raises(TypeError):
+        reverse_even_elements("not a list")
+
+def test_reverse_even_elements_negative_string_elements():
+    arr = [1, "two", 3, 4]
+    with pytest.raises(TypeError):
+        reverse_even_elements(arr)
+
+def test_reverse_even_elements_negative_mixed_types():
+    arr = [1, 2, "three", 4]
+    with pytest.raises(TypeError):
+        reverse_even_elements(arr)
+
+def test_reverse_even_elements_negative_none_elements():
+    arr = [1, None, 3, 4]
+    with pytest.raises(TypeError):
+        reverse_even_elements(arr)
+
+def test_reverse_even_elements_negative_bool_elements():
+    arr = [1, True, 3, False]
+    new_arr = reverse_even_elements(arr)
+    assert isinstance(new_arr, list)
+
+# Граничные тесты
+def test_reverse_even_elements_boundary_empty_list():
+    arr = []
+    assert reverse_even_elements(arr) == []
+
+def test_reverse_even_elements_boundary_single_element_even():
+    arr = [42]
+    assert reverse_even_elements(arr) == [42]
+
+def test_reverse_even_elements_boundary_single_element_odd():
+    arr = [7]
+    assert reverse_even_elements(arr) == [7]
+
+def test_reverse_even_elements_boundary_two_elements_both_even():
+    arr = [2, 4]
+    assert reverse_even_elements(arr) == [4, 2]
+
+def test_reverse_even_elements_boundary_two_elements_both_odd():
+    arr = [1, 3]
+    assert reverse_even_elements(arr) == [1, 3]
+
+def test_reverse_even_elements_boundary_two_elements_mixed():
+    arr = [2, 3]
+    assert reverse_even_elements(arr) == [2, 3]
+
+def test_reverse_even_elements_boundary_large_list():
+    arr = list(range(1, 1001))
+    new_arr = reverse_even_elements(arr)
+    assert len(new_arr) == 1000
+    for i in range(len(arr)):
+        if arr[i] % 2 != 0:
+            assert new_arr[i] == arr[i]
+
+def test_reverse_even_elements_boundary_evens_at_ends():
+    arr = [2, 1, 3, 5, 4]
+    assert reverse_even_elements(arr) == [4, 1, 3, 5, 2]
+
+def test_reverse_even_elements_boundary_negative_k_like_conditions():
+    arr = [1, 2, 3, 4, 5, 6, 7, 8]
+    new_arr = reverse_even_elements(arr)
+    expected = [1, 8, 3, 6, 5, 4, 7, 2]
+    assert new_arr == expected
